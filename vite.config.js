@@ -4,13 +4,18 @@ import vue from '@vitejs/plugin-vue';
 import vuetify from 'vite-plugin-vuetify';
 
 export default defineConfig({
+    server: {
+        watch: {
+          usePolling: true
+        }
+      },
     plugins: [
         laravel({
             input: [
                 'resources/sass/app.scss',
                 'vuejs/vue-web/main.js',
             ],
-            refresh: true,
+            refresh: ['**'],
         }),
         vue({
             template: {
