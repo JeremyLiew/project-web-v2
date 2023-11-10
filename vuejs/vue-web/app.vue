@@ -1,9 +1,7 @@
 <template>
-    <v-sheet>
-        <v-container>
-            i am an app
-        </v-container>
-    </v-sheet>
+    <transition name="fade">
+		<router-view></router-view>
+	</transition>
 </template>
 
 <script>
