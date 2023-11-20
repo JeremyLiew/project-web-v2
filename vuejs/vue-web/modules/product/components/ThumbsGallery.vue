@@ -5,9 +5,8 @@
 			class="overflow-hidden"
 		>
 			<div class="swiper-wrapper">
-				<template v-for="(photo, i) in items">
+				<template v-for="(photo, i) in items" :key="i">
 					<div
-						:key="i"
 						class="swiper-slide"
 					>
 						<div class="swiper-zoom-container">
@@ -15,45 +14,32 @@
 								name="image"
 								:item="photo"
 								:index="i"
-							></slot>
+							>
+							</slot>
 						</div>
 					</div>
 				</template>
 			</div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
 		</div>
 		<div
 			id="thumbSwiper"
-			class="overflow-hidden mt-1 position-relative"
+			class="overflow-hidden mt-5"
+			style="height:110px;"
 		>
 			<div class="swiper-wrapper">
-				<template v-for="(photo, i) in items">
+				<template v-for="(photo, i) in items" :key="i">
 					<div
-						:key="i"
-						class="swiper-slide"
+						class="swiper-slide text-center"
 					>
 						<slot
-							name="image"
+							name="thumbImage"
 							:item="photo"
 							:index="i"
 						></slot>
 					</div>
 				</template>
-			</div>
-			<div id="thumbSwiper-button-next" class="position-absolute transform-center-y" style="right: 1px; top:40%; z-index: 1;">
-				<v-btn
-					depressed x-small
-					dark plain :ripple="false"
-				>
-					<v-icon>mdi-chevron-right</v-icon>
-				</v-btn>
-			</div>
-			<div id="thumbSwiper-button-prev" class="position-absolute transform-center-y" style="left: 1px; top:40%; z-index: 1;">
-				<v-btn
-					depressed x-small
-					dark plain :ripple="false"
-				>
-					<v-icon>mdi-chevron-left</v-icon>
-				</v-btn>
 			</div>
 		</div>
 	</v-card>
@@ -62,6 +48,7 @@
 <script>
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
+
 export default {
 	props:{
 		items: {
@@ -81,15 +68,13 @@ export default {
 	methods:{
 		initSwiper(){
 			this.thumbSwiper = new Swiper("#thumbSwiper", {
+				observer: true,
+				observeParents: true,
 				loop: false,
-				spaceBetween: 5,
+				spaceBetween: 0,
 				slidesPerView: 4,
 				freeMode: true,
 				watchSlidesProgress: true,
-				navigation: {
-					nextEl: "#thumbSwiper-button-next",
-					prevEl: "#thumbSwiper-button-prev",
-				},
 			});
 
 			this.swiper = new Swiper("#swiper", {
@@ -100,36 +85,35 @@ export default {
 					swiper: this.thumbSwiper,
 				},
 				zoom: {
-					maxRatio: 3.5,
-					minRation: 1
+					maxRatio: 3,
+					minRation: 1,
 				},
-				on: {
-					tap: function () {
-						this.zoom.toggle();
+				on:{
+					tap:function(){
+						this.zoom.toggle()
 					},
-					slideChangeTransitionEnd: function(){
-						this.zoom.out();
-					},
+				},
+				navigation: {
+					nextEl: ".swiper-button-next",
+					prevEl: ".swiper-button-prev",
 				},
 			});
 		},
+		zoomIn(){
+			this.swiper.zoom.in()
+		},
+		zoomOut(){
+			this.swiper.zoom.out()
+		}
 	}
 }
 </script>
 
 <style scoped>
-.swiper-slide {
-	background-position: center;
-	background-size: cover;
+.swiper-button-next, .swiper-button-prev{
+    color: grey;
+	--swiper-navigation-size:33px !important;
 }
 
-.thumbSwiper .swiper-slide {
-	width: 25%;
-	height: 100%;
-	opacity: 0.4;
-}
-
-.thumbSwiper .swiper-slide-thumb-active {
-	opacity: 1;
-}
 </style>
+

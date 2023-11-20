@@ -3,6 +3,7 @@ import App from './app.vue';
 import vuetify from './plugins/Vuetify';
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes/index';
+import '@mdi/font/css/materialdesignicons.css'
 
 const app = createApp(App);
 

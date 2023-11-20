@@ -58,6 +58,10 @@ return [
 
     'asset_url' => env('ASSET_URL', '/'),
 
+    'web_url' => env('APP_WEB_URL', null),
+
+    'admin_url' => env('APP_ADMIN_URL', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -193,6 +197,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
 
     ],
